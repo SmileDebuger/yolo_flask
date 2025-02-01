@@ -1,4 +1,4 @@
-# flask集成YOLOV5算法Demo示例
+# flask集成YOLO系列算法Demo示例
 
 ## 实现步骤
 
