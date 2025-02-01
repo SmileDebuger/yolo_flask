@@ -1,34 +1,3 @@
-# flask集成YOLOV5算法Demo示例
-
-## 实现步骤
-
-- 准备一个YOLOV5仓库代码，链接：https://github.com/ultralytics/yolov5
-
-- 将代码下载后，将本系统代码复制到YOLOV5项目下
-
-- 安装Anaconda环境，创建虚拟仓库，本项目Python为3.9，使用
-
-  ```shell
-  pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
-  ```
-
-- 最后补充一下flask依赖即可
-
-```shell
-pip install -r flask -i https://pypi.tuna.tsinghua.edu.cn/simple
-```
-
-- 然后在该虚拟环境下运行app.py文件
-
-```shell
-python app.py
-```
-
-- **在网页中输入127.0.0.1:5000  项目默认端口为5000，用户可根据自己需要在app.py中进行更改**
-
-**项目核心代码**
-
-```python
 from flask import Flask, render_template, request
 from werkzeug.utils import secure_filename
 import os
@@ -56,10 +25,7 @@ os.makedirs(uploads_dir, exist_ok=True)
 def hello_world():
     return render_template('index.html')
 
-'''
-根据不同版本yolov5版本里面的detect.py run方法灵活切换，只需检测文件生成地址为这个就行project=ROOT / 'static/images'
-用于串联前端页面显示
-'''
+
 @smart_inference_mode()
 def run(
         weights='yolov5s.pt',  # model path or triton URL
@@ -253,46 +219,3 @@ def detect():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)  # debug=True causes Restarting with stat
-
-```
-
-前端demo代码：
-
-index.html
-
-```html
-<html>
-  <head>
-    <title>目标检测系统</title>
-  </head>
-  <body>
-    <div>
-        <h1>文件上传</h1>
-        <form action="/detect" enctype='multipart/form-data' method='POST'>
-        <input type="file" name="file">
-        <input type="submit" value="上传">
-        </form>
-    </div>
-  </body>
-</html>
-```
-
-result.html
-
-```html
-<html>
-  <head>
-    <title>目标检测</title>
-  </head>
-  <body>
-    <div>
-        <h1>目标检测结果</h1>
-        <img src="{{img_url}}" alt="Sample Image">
-    </div>
-  </body>
-</html>
-```
-
-## Reference
-
-https://github.com/ultralytics/yolov5
